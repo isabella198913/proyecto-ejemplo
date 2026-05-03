@@ -1,0 +1,16 @@
+# Dependencias (la más importante para que no pese)
+node_modules/
+
+# Seguridad (para que no vean tu clave de MariaDB)
+.env
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs de errores
+*.log
+npm-debug.log*
+
+# Configuración de VS Code
+.vscode/
