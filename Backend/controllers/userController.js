@@ -1,9 +1,13 @@
- const User = require("../models/user");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const keys = require("../config/keys");
+const User = require("../models/user");      // Importa el modelo para hacer consultas a la BD
+const bcrypt = require("bcryptjs");          // Para comparar contraseñas encriptadas
+const jwt = require("jsonwebtoken");         // Para generar el token de sesión
+const keys = require("../config/keys");      // Para usar la clave secreta del JWT
+
 
 module.exports = {
+  // FUNCIÓN 1: login
+// Recibe email y password, verifica que existan y que la contraseña sea correcta,
+// genera un token JWT válido por 1 hora y lo devuelve con los datos del usuario
   login(req, res) {
     const email = req.body.email;
     const password = req.body.password;
@@ -59,6 +63,8 @@ module.exports = {
   },
 
   getAllUsers(req, res) {
+    //FUNCIÓN 2: getAllUsers
+// Llama a User.findAll() y devuelve la lista completa de usuarios 
     User.findAll((err, users) => {
       if (err) {
         return res.status(501).json({
@@ -74,7 +80,9 @@ module.exports = {
       });
     });
   },
-
+ // FUNCIÓN 3: getUserById
+// Toma el id de la URL (req.params.id), busca ese usuario,
+// si no existe responde 404, si existe lo devuelve
   getUserById(req, res) {
     const id = req.params.id;
     User.findById(id, (err, user) => {
@@ -99,6 +107,9 @@ module.exports = {
     });
   },
 
+  // FUNCIÓN 4: register
+// Toma los datos del body, si no viene rol asigna "user" por defecto,
+// llama a User.create() y devuelve el usuario creado
   register(req, res) {
     const user = req.body;
 
@@ -123,6 +134,8 @@ module.exports = {
     });
   },
 
+  // FUNCIÓN 5: getUserUpdate
+// Toma los datos del body y llama a User.update() para actualizar el usuario
   getUserUpdate(req, res) {
     const user = req.body;
     User.update(user, (err, data) => {
@@ -142,6 +155,8 @@ module.exports = {
   },
 
   getUserDelete(req, res) {
+    // FUNCIÓN 6: getUserDelete
+// Toma el id de la URL y llama a User.delete() para eliminar ese usuario
     const id = req.params.id;
     User.delete(id, (err, data) => {
       if (err) {
